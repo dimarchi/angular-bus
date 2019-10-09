@@ -59,6 +59,7 @@ export class BusStopComponent implements OnInit {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
       });
+
       let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon}).addTo(map);
       mark.bindPopup(`${this.busStops[i].name}, ${this.busStops[i].distance} m`);
     }

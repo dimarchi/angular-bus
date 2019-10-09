@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-timetable',
@@ -54,8 +55,8 @@ export class TimetableComponent implements OnInit {
             let time = data.data.stop.stoptimesWithoutPatterns;
 
             time.map(t => {
-              let arrival = new Date(t.realtimeArrival + (t.serviceDay * 1000)).toUTCString();
-              let departure = new Date(t.realtimeDeparture + (t.serviceDay * 1000)).toUTCString();
+              let arrival = moment(t.realtimeArrival + (t.serviceDay * 1000)).format('LLLL'); // formatting unix timestamp
+              let departure = moment(t.realtimeDeparture + (t.serviceDay * 1000)).format('LLLL');
               let timeDate = new Date(t.serviceDay * 1000).toUTCString();
               this.timetable = [...this.timetable, {'name': data.data.stop.name, 'realtimeArrival': t.realtimeArrival, 'realtimeDeparture': t.realtimeDeparture, 'serviceDay': t.serviceDay, 'arrival': arrival, 'departure': departure, 'date': timeDate, 'realtime': t.realtime}];
             });
