@@ -1,0 +1,138 @@
+import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'angular-bus';
+
+  // https://tools.wmflabs.org/geohack/geohack.php?language=fi&pagename=Manner-Suomen_keskipiste&params=64.96_N_27.59_E_region:FI-09_type:landmark
+  // as default values
+  latitude: number = 64.96;
+  longitude: number = 27.59;
+  stops = [];
+  map;
+  maps;
+  marker;
+  selected = {};
+
+  // from https://stackoverflow.com/questions/11415106/issue-with-calculating-compass-bearing-between-two-gps-coordinates
+  // modified
+  bearing(lat1,lng1,lat2,lng2) {
+    var dLon = (lng2-lng1);
+    var y = Math.sin(dLon) * Math.cos(lat2);
+    var x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+    var brng = this.toDeg(Math.atan2(y, x));
+    return 360 - ((brng + 360) % 360);
+    }
+
+   toDeg(rad) {
+    return rad * 180 / Math.PI;
+    }
+
+  getNearestBusStops(lat, lon) {
+
+    const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
+        const query = `
+        {
+            nearest(lat: ${lat}, lon: ${lon}, maxResults: 3, maxDistance: 100000, filterByPlaceTypes: [STOP]) {
+                edges {
+                    node {
+                        place {
+                            lat
+                            lon
+                            ...on Stop {
+                                name
+                                gtfsId
+                                code
+                            }
+                        }
+                        distance
+                    }
+                }
+            }
+        }
+        `;
+    
+        fetch(DIGITRANSIT_URL, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/graphql'
+            },
+            body: query
+        })
+        .then(res => res.json())
+        .then(data => {
+            const places = data.data.nearest.edges;
+    
+            places.map(entry => {
+                const location = entry.node.place;
+                const distance = entry.node.distance;
+
+                const compass = this.bearing(lat, lon, location.lat, location.lon);
+
+                this.stops = [...this.stops, {'name': location.name, 'code': location.code, 'gtfsId': location.gtfsId, 'lat': location.lat, 'lon': location.lon, 'distance': distance, 'bearing': compass, 'selected': 0}];
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    displayLocation(position) {
+        let lat = position.coords.latitude.toFixed(3);
+        let lon = position.coords.longitude.toFixed(3);
+
+        this.getNearestBusStops(lat, lon);
+        this.marker.setLatLng([lat, lon]);
+        this.map.panTo([lat, lon]);
+        this.onMapReady(this.map);
+    }
+
+    onMapReady(map: L.Map) {
+        setTimeout(() => {
+          map.invalidateSize();
+        }, 0);
+    }
+
+    selectedStop($event) {
+        this.selected = $event;
+    }
+
+    ngOnInit() {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.displayLocation(position);
+            },
+            (denied) => {
+                console.log('Not authorized by user.', denied);
+            });
+            
+        } else {
+            this.getNearestBusStops(this.latitude, this.longitude);
+        }
+
+        this.map = L.map('map').setView([this.latitude, this.longitude], 13);
+        this.maps = this.map;
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+
+        // from https://github.com/pointhi/leaflet-color-markers
+        let blueIcon = new L.Icon({
+            iconUrl: 'assets/img/marker-icon-2x-blue.png',
+            shadowUrl: 'assets/img/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        this.marker = L.marker([this.latitude, this.longitude], {icon: blueIcon}).addTo(this.map);
+        this.marker.bindPopup("Your current location").openPopup();
+    }
+}

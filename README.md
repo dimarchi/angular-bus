@@ -1,0 +1,1 @@
+Three closest bus stops to your location, with data from digitransit.fi (not complete, therefore), valid only in Finland as this uses data specific to Finland.

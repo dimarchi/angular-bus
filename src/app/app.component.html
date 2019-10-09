@@ -1,0 +1,17 @@
+<div class="container">
+  <h1 class="title has-text-centered">Three closest bus stops to your current location</h1>
+<app-bus-stop [busStops]="stops" [mapInstance]="maps" (selectEvent)="selectedStop($event)"></app-bus-stop>
+<div leaflet (leafletMapReady)="onMapReady($event)" id="map"></div>
+<div class="columns">
+    <div class="column">
+      <h2 class="subtitle has-text-centered">Busses stopping at the selected stop</h2>
+      <app-routes [stop]="selected"></app-routes>
+    </div>
+    <div class="column">
+      <h2 class="subtitle has-text-centered">Estimated timetable for the stop</h2>
+      <app-timetable [stop]="selected"></app-timetable>
+    </div>
+</div>
+</div>
+
+<router-outlet></router-outlet>

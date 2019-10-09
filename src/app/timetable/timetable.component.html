@@ -1,0 +1,18 @@
+<table class="table" *ngIf="timetable.length > 0">
+    <thead>
+        <tr>
+            <th>Bus</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Realtime</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let time of timetable">
+        <tr>
+            <td>{{ time.name }}</td>
+            <td>{{ time.arrival }}</td>
+            <td>{{ time.departure }}</td>
+            <td>{{ time.realtime === false ? 'No' : 'Yes' }}</td>
+        </tr>
+    </tbody>
+</table>
