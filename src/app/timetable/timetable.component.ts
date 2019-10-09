@@ -20,6 +20,8 @@ export class TimetableComponent implements OnInit {
     if (this.stop.gtfsId) {
       const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
+      // query from https://digitransit.fi/en/developers/apis/1-routing-api/stops/
+      // Query scheduled departure and arrival times of a stop
       const query = `
       {
         stop(id: "${this.stop.gtfsId}") {

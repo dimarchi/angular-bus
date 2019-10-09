@@ -20,6 +20,8 @@ export class RoutesComponent implements OnInit {
     
     const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
+    // query from https://digitransit.fi/en/developers/apis/1-routing-api/stops/
+    // Query stop by ID and information about routes that go through it
     const query = `
     {
       stop(id: "${this.stop.gtfsId}") {

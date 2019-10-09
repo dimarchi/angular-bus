@@ -33,9 +33,12 @@ export class AppComponent {
     return rad * 180 / Math.PI;
     }
 
-  getNearestBusStops(lat, lon) {
+    getNearestBusStops(lat, lon) {
 
-    const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
+        const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
+
+        // query from https://digitransit.fi/en/developers/apis/1-routing-api/0-graphql/
+        // modified
         const query = `
         {
             nearest(lat: ${lat}, lon: ${lon}, maxResults: 3, maxDistance: 100000, filterByPlaceTypes: [STOP]) {
@@ -56,7 +59,7 @@ export class AppComponent {
             }
         }
         `;
-    
+        
         fetch(DIGITRANSIT_URL, {
             method: 'post',
             headers: {
@@ -67,7 +70,7 @@ export class AppComponent {
         .then(res => res.json())
         .then(data => {
             const places = data.data.nearest.edges;
-    
+
             places.map(entry => {
                 const location = entry.node.place;
                 const distance = entry.node.distance;
