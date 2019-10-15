@@ -9,6 +9,7 @@ import * as moment from 'moment';
 export class TimetableComponent implements OnInit {
 
   @Input() stop: any = {};
+  @Input() routeTimeTable: any = {};
   timetable: any = [];
 
   constructor() { }
@@ -18,6 +19,7 @@ export class TimetableComponent implements OnInit {
 
   ngOnChanges() {
     if (this.stop.gtfsId) {
+
       const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
       // query from https://digitransit.fi/en/developers/apis/1-routing-api/stops/
@@ -57,10 +59,10 @@ export class TimetableComponent implements OnInit {
             let time = data.data.stop.stoptimesWithoutPatterns;
 
             time.map(t => {
-              let arrival = moment(t.realtimeArrival + (t.serviceDay * 1000)).format('LLLL'); // formatting unix timestamp
-              let departure = moment(t.realtimeDeparture + (t.serviceDay * 1000)).format('LLLL');
+              let arrival = moment(t.serviceDay * 1000).seconds(t.realtimeArrival).format('LLLL'); // formatting unix timestamp
+              let departure = moment(t.serviceDay * 1000).seconds(t.realtimeDeparture).format('LLLL');
               let timeDate = new Date(t.serviceDay * 1000).toUTCString();
-              this.timetable = [...this.timetable, {'name': data.data.stop.name, 'realtimeArrival': t.realtimeArrival, 'realtimeDeparture': t.realtimeDeparture, 'serviceDay': t.serviceDay, 'arrival': arrival, 'departure': departure, 'date': timeDate, 'realtime': t.realtime}];
+              this.timetable = [...this.timetable, {'name': data.data.stop.name, 'headsign': t.headsign, 'realtimeArrival': t.realtimeArrival, 'realtimeDeparture': t.realtimeDeparture, 'serviceDay': t.serviceDay, 'arrival': arrival, 'departure': departure, 'date': timeDate, 'realtime': t.realtime}];
             });
           }
           

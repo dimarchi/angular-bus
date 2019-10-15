@@ -18,6 +18,7 @@ export class AppComponent {
   maps;
   marker;
   selected = {};
+  route = {};
 
   // from https://stackoverflow.com/questions/11415106/issue-with-calculating-compass-bearing-between-two-gps-coordinates
   // modified
@@ -89,6 +90,10 @@ export class AppComponent {
         let lat = position.coords.latitude.toFixed(3);
         let lon = position.coords.longitude.toFixed(3);
 
+        // testing coordinates
+        //lat = 65.016667;
+        //lon = 25.466667;
+
         this.getNearestBusStops(lat, lon);
         this.marker.setLatLng([lat, lon]);
         this.map.panTo([lat, lon]);
@@ -103,6 +108,10 @@ export class AppComponent {
 
     selectedStop($event) {
         this.selected = $event;
+    }
+
+    selectedRoute($event) {
+        this.route = $event;
     }
 
     ngOnInit() {

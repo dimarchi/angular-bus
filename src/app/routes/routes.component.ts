@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-routes',
@@ -8,9 +8,22 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class RoutesComponent implements OnInit {
 
   @Input() stop: any = {};
+  @Output() selectedBusRoute: EventEmitter<any> = new EventEmitter<any>();
   busses: any = [];
 
   constructor() { }
+
+  routeClicked(route) {
+    for (let i = 0; i < this.busses.length; i++) {
+      this.busses[i].selected = 0;
+    }
+    for (let i = 0; i < this.busses.length; i++) {
+      if (this.busses[i].headsign === route.headsign) {
+        this.busses[i].selected = 1;
+      }
+    }
+    this.selectedBusRoute.emit(route);
+  }
 
   ngOnInit() {
     
@@ -57,7 +70,7 @@ export class RoutesComponent implements OnInit {
       if (data.data.stop) {
         let busPatterns = data.data.stop.patterns;
         busPatterns.map(bus => {
-          this.busses = [...this.busses, {'shortname': bus.route.shortName, 'headsign': bus.headsign}];
+          this.busses = [...this.busses, {'gtfsId': data.data.stop.gtfsId, 'shortname': bus.route.shortName, 'headsign': bus.headsign, 'selected': 0}];
         })
       }
         

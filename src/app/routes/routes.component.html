@@ -4,51 +4,7 @@
       <tr><th>Line</th><th>Route</th></tr>
     </thead>
     <tbody *ngFor="let bus of busses">
-    <tr><td>{{ bus.shortname }}</td><td>{{ bus.headsign }}</td></tr>
+    <tr (click)="routeClicked(bus)" [ngClass]="bus.selected === 1 ? 'selected-route' : ''"><td>{{ bus.shortname }}</td><td>{{ bus.headsign }}</td></tr>
   </tbody>
   </table>
 </div>
-
-<code>
-    <!--
-      Query stop by ID and information about routes that go through it
-{
-    stop(id: "OULU:331317") {
-      gtfsId
-      name
-      lat
-      lon
-      patterns {
-        code
-        directionId
-        headsign
-        route {
-          gtfsId
-          shortName
-          longName
-          mode
-        }
-      }
-    }
-  }
-
-Query scheduled departure and arrival times of a stop
-  {
-  stop(id: "OULU:331317") {
-    name
-      stoptimesWithoutPatterns {
-      scheduledArrival
-      realtimeArrival
-      arrivalDelay
-      scheduledDeparture
-      realtimeDeparture
-      departureDelay
-      realtime
-      realtimeState
-      serviceDay
-      headsign
-    }
-  }  
-}
-  -->
-</code>
