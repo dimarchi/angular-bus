@@ -91,8 +91,8 @@ export class AppComponent {
         let lon = position.coords.longitude.toFixed(3);
 
         // testing coordinates, Oulu - Finland
-        lat = 65.016667;
-        lon = 25.466667;
+        //lat = 65.016667;
+        //lon = 25.466667;
 
         this.getNearestBusStops(lat, lon);
         this.marker.setLatLng([lat, lon]);
