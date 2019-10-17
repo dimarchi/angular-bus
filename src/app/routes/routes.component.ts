@@ -70,8 +70,8 @@ export class RoutesComponent implements OnInit {
       if (data.data.stop) {
         let busPatterns = data.data.stop.patterns;
         busPatterns.map(bus => {
-          this.busses = [...this.busses, {'gtfsId': data.data.stop.gtfsId, 'shortname': bus.route.shortName, 'headsign': bus.headsign, 'selected': 0}];
-        })
+          this.busses = [...this.busses, {'gtfsId': data.data.stop.gtfsId, 'code': bus.code, 'directionId': bus.directionId, 'shortname': bus.route.shortName, 'headsign': bus.headsign, 'longname': bus.route.longName, 'selected': 0}];
+        });
       }
         
     })

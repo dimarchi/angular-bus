@@ -3,6 +3,11 @@
     color: white;
 }
 
+div {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
 tbody tr:hover {
     cursor: pointer;
 }

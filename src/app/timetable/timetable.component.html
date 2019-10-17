@@ -2,17 +2,16 @@
     <thead>
         <tr>
             <th>Bus head sign</th>
-            <th>Arrival</th>
-            <th>Departure</th>
-            <th>Realtime</th>
+            <th title="Scheduled arrival and departure time">Schedule</th>
+            <th title="Currently expected time if tracked in real time, empty otherwise">Real time</th>
         </tr>
     </thead>
     <tbody *ngFor="let time of timetable">
         <tr>
             <td>{{ time.headsign }}</td>
-            <td>{{ time.arrival }}</td>
-            <td>{{ time.departure }}</td>
-            <td>{{ time.realtime === false ? 'No' : 'Yes' }}</td>
+            <td>{{ time.scheduledDeparture }}</td>
+            <td *ngIf="time.realtime === true">{{ time.arrival }}</td>
+            <td *ngIf="time.realtime === false"> </td>
         </tr>
     </tbody>
 </table>

@@ -59,10 +59,12 @@ export class TimetableComponent implements OnInit {
             let time = data.data.stop.stoptimesWithoutPatterns;
 
             time.map(t => {
-              let arrival = moment(t.serviceDay * 1000).seconds(t.realtimeArrival).format('LLLL'); // formatting unix timestamp
-              let departure = moment(t.serviceDay * 1000).seconds(t.realtimeDeparture).format('LLLL');
+              let arrival = moment(t.serviceDay * 1000).seconds(t.realtimeArrival).format('HH:mm'); // formatting unix timestamp
+              let departure = moment(t.serviceDay * 1000).seconds(t.realtimeDeparture).format('HH:mm');
+              let scheduleArr = moment(t.serviceDay * 1000).seconds(t.scheduledArrival).format('HH:mm');
+              let scheduleDep = moment(t.serviceDay * 1000).seconds(t.scheduledDeparture).format('HH:mm');
               let timeDate = new Date(t.serviceDay * 1000).toUTCString();
-              this.timetable = [...this.timetable, {'name': data.data.stop.name, 'headsign': t.headsign, 'realtimeArrival': t.realtimeArrival, 'realtimeDeparture': t.realtimeDeparture, 'serviceDay': t.serviceDay, 'arrival': arrival, 'departure': departure, 'date': timeDate, 'realtime': t.realtime}];
+              this.timetable = [...this.timetable, {'name': data.data.stop.name, 'headsign': t.headsign, 'realtimeArrival': t.realtimeArrival, 'realtimeDeparture': t.realtimeDeparture, 'scheduledArrival': scheduleArr, 'scheduledDeparture': scheduleDep, 'serviceDay': t.serviceDay, 'arrival': arrival, 'departure': departure, 'date': timeDate, 'realtime': t.realtime}];
             });
           }
           
