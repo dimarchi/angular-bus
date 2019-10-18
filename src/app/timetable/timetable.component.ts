@@ -11,6 +11,7 @@ export class TimetableComponent implements OnInit {
   @Input() stop: any = {};
   @Input() routeTimeTable: any = {};
   timetable: any = [];
+  selectedStop:any = {};
 
   constructor() { }
 
@@ -19,14 +20,19 @@ export class TimetableComponent implements OnInit {
 
   ngOnChanges() {
     if (this.stop.gtfsId) {
+      this.selectedStop = this.stop.gtfsId;
+      this.updateTimeTable(this.stop.gtfsId)
+    }
+  }
 
-      const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
+  updateTimeTable(stopID) {
+    const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
       // query from https://digitransit.fi/en/developers/apis/1-routing-api/stops/
       // Query scheduled departure and arrival times of a stop
       const query = `
       {
-        stop(id: "${this.stop.gtfsId}") {
+        stop(id: "${stopID}") {
           name
             stoptimesWithoutPatterns {
             scheduledArrival
@@ -54,7 +60,6 @@ export class TimetableComponent implements OnInit {
       .then(res => res.json())
       .then(data => {
         this.timetable = [];
-          console.log('timetable data', data);
           if (data.data.stop) {
             let time = data.data.stop.stoptimesWithoutPatterns;
 
@@ -72,7 +77,6 @@ export class TimetableComponent implements OnInit {
       .catch(error => {
         console.log(error);
       });
-    }
   }
 
 }
