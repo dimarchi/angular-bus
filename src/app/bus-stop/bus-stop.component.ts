@@ -14,6 +14,8 @@ export class BusStopComponent implements OnInit {
   @Input() mapInstance: any = {};
   @Output() selectEvent: EventEmitter<any> = new EventEmitter<any>();
 
+  marker = [];
+
   // https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words/54677081#54677081
     // answer by Matt Frear (September 16 2014, 11:02), modified
   degToCardinal = (num) => {
@@ -40,14 +42,26 @@ export class BusStopComponent implements OnInit {
     }
   }
 
+  // https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers
+  // modified
+  removeMarks(markerStore) {
+    const map = this.mapInstance;
+    for (let i = 0; i < markerStore.length; i++) {
+     map.removeLayer(markerStore[i]);
+    }
+  }
+
   ngOnInit() {
     
   }
 
   ngOnChanges() {
     this.busStops;
+
+    this.removeMarks(this.marker);
     
     const map = this.mapInstance;
+
     for (let i = 0; i < this.busStops.length; i++) {
 
       // from https://github.com/pointhi/leaflet-color-markers
@@ -60,7 +74,9 @@ export class BusStopComponent implements OnInit {
         shadowSize: [41, 41]
       });
 
-      let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon}).addTo(map);
+      let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon});
+      this.marker.push(mark);
+      map.addLayer(mark);
       mark.bindPopup(`${this.busStops[i].name}, ${this.busStops[i].distance} m`);
     }
   }

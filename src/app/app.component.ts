@@ -114,6 +114,21 @@ export class AppComponent {
         this.route = $event;
     }
 
+    // https://gis.stackexchange.com/questions/210041/using-leaflet-js-is-it-possible-to-know-the-onclick-location-of-a-marker-ignor/210102
+    // modified
+    clickedLocation($event) {
+        let latlng = this.map.mouseEventToLatLng($event);
+        let pos = 
+        {
+            coords: {
+                latitude: latlng.lat,
+                longitude: latlng.lng
+            }
+        }
+        this.stops = [];
+        this.displayLocation(pos);
+    }
+ 
     ngOnInit() {
 
         if (navigator.geolocation) {
