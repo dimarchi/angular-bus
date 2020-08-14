@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container is-fluid">
   <h1 class="title has-text-centered">Three closest bus stops to your current location</h1>
 <app-bus-stop [busStops]="stops" [mapInstance]="maps" (selectEvent)="selectedStop($event)"></app-bus-stop>
 <div leaflet (leafletMapReady)="onMapReady($event)" id="map" (dblclick)="clickedLocation($event)"></div>
