@@ -150,6 +150,10 @@ export class AppComponent {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
 
+        // adding a scale indicator to map (lower left corner)
+        let scale = L.control.scale().addTo(this.map);
+        scale.options.metric;
+
         // from https://github.com/pointhi/leaflet-color-markers
         let blueIcon = new L.Icon({
             iconUrl: 'assets/img/marker-icon-2x-blue.png',
