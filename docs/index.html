@@ -9,9 +9,11 @@
 
         <h1>Documentation</h1>
 
-        <p>This is an Angular 8 project exploring <a href="https://leafletjs.com/">leaflet.js</a> and data from <a href="https://digitransit.fi/en/developers/">digitransit.fi</a>. As such, this is useful only in Finland.</p>
+        <p>This is an Angular project exploring <a href="https://leafletjs.com/">leaflet.js</a> and data from <a href="https://digitransit.fi/en/developers/">digitransit.fi</a>. As such, this is useful only in Finland.</p>
 
         <p>Since this project uses IP addresses for detecting your current location, it can be completely different from your actual location. You can also choose a random point on the map by double clicking it. That position may or may not have bus stops nearby within the search radius. In more remote areas the closer the location is to a road the more likely it is that bus stops are found.</p>
+
+        <p>The production build files in the dist folder have a base href of /bus. You may need to configure your server accordingly, as discussed in the Angular documentation regarding deployment. In my case, the server for my web pages is Apache, so I am using a .htaccess file with rewrite rules in the bus directory.</p>
 
         <h2>Additional stuff used</h2>
 
@@ -22,6 +24,8 @@
         </ul>
 
         <h2>Images</h2>
+
+        <p><em>Currently outdated (no scale). Otherwise no functional changes.</em></p>
 
         <ul>
             <li><a href="images/default-view.png">Default view</a>. Starting point for this app.</li>
