@@ -6,17 +6,24 @@ import { AppComponent } from './app.component';
 import { BusStopComponent } from './bus-stop/bus-stop.component';
 import { RoutesComponent } from './routes/routes.component';
 import { TimetableComponent } from './timetable/timetable.component';
+import { HelpComponent } from './help/help.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BusStopComponent,
     RoutesComponent,
-    TimetableComponent
+    TimetableComponent,
+    HelpComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
