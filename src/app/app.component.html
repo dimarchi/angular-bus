@@ -13,6 +13,7 @@
         <app-timetable [stop]="selected" [routeTimeTable]="route"></app-timetable>
       </div>
   </div>
+  <app-reset (resetView)="defaultView($event)"></app-reset>
   <app-footer></app-footer>
 </div>
 

@@ -128,19 +128,12 @@ export class AppComponent {
         this.stops = [];
         this.displayLocation(pos);
     }
- 
-    ngOnInit() {
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.displayLocation(position);
-            },
-            (denied) => {
-                console.log('Not authorized by user.', denied);
-            });
-            
-        } else {
-            this.getNearestBusStops(this.latitude, this.longitude);
+    defaultView($event?) {
+        
+        if ($event && $event == 'reset') {
+            // work in progress, currently does not work as it should
+            this.map.remove();
         }
 
         this.map = L.map('map').setView([this.latitude, this.longitude], 13);
@@ -165,5 +158,22 @@ export class AppComponent {
         });
         this.marker = L.marker([this.latitude, this.longitude], {icon: blueIcon}).addTo(this.map);
         this.marker.bindPopup("Your current location").openPopup();
+    }
+ 
+    ngOnInit() {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.displayLocation(position);
+            },
+            (denied) => {
+                console.log('Not authorized by user.', denied);
+            });
+            
+        } else {
+            this.getNearestBusStops(this.latitude, this.longitude);
+        }
+
+        this.defaultView();
     }
 }

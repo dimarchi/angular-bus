@@ -10,6 +10,7 @@ import { HelpComponent } from './help/help.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './footer/footer.component';
+import { ResetComponent } from './reset/reset.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FooterComponent } from './footer/footer.component';
     RoutesComponent,
     TimetableComponent,
     HelpComponent,
-    FooterComponent
+    FooterComponent,
+    ResetComponent
   ],
   imports: [
     BrowserModule,
