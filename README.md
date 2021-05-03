@@ -1,6 +1,6 @@
-#angular-bus
+# angular-bus
 
-##A short introduction
+## A short introduction
 
 Three closest bus stops to your location, with data from [digitransit.fi](https://digitransit.fi) (not complete, therefore), valid only in Finland as this uses data specific to Finland.
 
