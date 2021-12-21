@@ -1,4 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-reset',
@@ -7,11 +8,12 @@ import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 })
 export class ResetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private resetter : DataService) { }
 
   @Output() resetView : EventEmitter<any> = new EventEmitter<any>();
 
   resetViewToDefault() {
+    this.resetter.resetter = 1;
     this.resetView.emit('reset');
   }
 

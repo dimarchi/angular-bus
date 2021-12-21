@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-bus-stop',
@@ -8,7 +9,7 @@ import * as L from 'leaflet';
 })
 export class BusStopComponent implements OnInit {
 
-  constructor() {}
+  constructor(private resetter : DataService) { }
 
   @Input() busStops: any = {};
   @Input() mapInstance: any = {};

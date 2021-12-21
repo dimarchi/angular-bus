@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import * as L from 'leaflet';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    constructor(private resetter : DataService) { }
+
   title = 'angular-bus';
 
   // https://tools.wmflabs.org/geohack/geohack.php?language=fi&pagename=Manner-Suomen_keskipiste&params=64.96_N_27.59_E_region:FI-09_type:landmark

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-timetable',
@@ -13,7 +14,7 @@ export class TimetableComponent implements OnInit {
   timetable: any = [];
   selectedStop:any = {};
 
-  constructor() { }
+  constructor(private resetter : DataService) { }
 
   ngOnInit() {
   }

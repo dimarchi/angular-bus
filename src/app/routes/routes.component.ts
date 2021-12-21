@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-routes',
@@ -11,7 +12,7 @@ export class RoutesComponent implements OnInit {
   @Output() selectedBusRoute: EventEmitter<any> = new EventEmitter<any>();
   busses: any = [];
 
-  constructor() { }
+  constructor(private resetter : DataService) { }
 
   routeClicked(route) {
     for (let i = 0; i < this.busses.length; i++) {
