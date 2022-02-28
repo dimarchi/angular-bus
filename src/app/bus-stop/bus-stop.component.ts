@@ -16,6 +16,7 @@ export class BusStopComponent implements OnInit {
   @Output() selectEvent: EventEmitter<any> = new EventEmitter<any>();
 
   marker = [];
+  stops = L.layerGroup();
 
   // https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words/54677081#54677081
     // answer by Matt Frear (September 16 2014, 11:02), modified
@@ -59,9 +60,10 @@ export class BusStopComponent implements OnInit {
   ngOnChanges() {
     this.busStops;
 
-    this.removeMarks(this.marker);
+    this.marker = [];
     
     const map = this.mapInstance;
+    map.removeLayer(this.stops);
 
     for (let i = 0; i < this.busStops.length; i++) {
 
@@ -75,10 +77,17 @@ export class BusStopComponent implements OnInit {
         shadowSize: [41, 41]
       });
 
-      let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon});
+      let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon}).bindPopup(`${this.busStops[i].name}, ${this.busStops[i].distance} m`);
       this.marker.push(mark);
-      map.addLayer(mark);
-      mark.bindPopup(`${this.busStops[i].name}, ${this.busStops[i].distance} m`);
+    }
+
+    this.stops = L.layerGroup(this.marker);
+    map.addLayer(this.stops);
+
+    if (this.resetter.resetter === 1) {
+      this.busStops = [];
+      map.removeLayer(this.stops);
+      this.resetter.resetter = 0;
     }
   }
 

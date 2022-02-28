@@ -135,7 +135,6 @@ export class AppComponent {
     defaultView($event?) {
         
         if ($event && $event == 'reset') {
-            // work in progress, currently does not work as it should
             this.map.remove();
         }
 
