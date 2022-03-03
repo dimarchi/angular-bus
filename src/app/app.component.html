@@ -3,7 +3,15 @@
   <app-help></app-help>
   <app-bus-stop [busStops]="stops" [mapInstance]="maps" (selectEvent)="selectedStop($event)"></app-bus-stop>
   <div leaflet (leafletMapReady)="onMapReady($event)" id="map" (dblclick)="clickedLocation($event)"></div>
-  <div class="columns">
+  <div class="columns" *ngIf="resetCheck === 1">
+    <div class="column">
+      <h2 class="subtitle has-text-centered">Busses stopping at the selected stop</h2>
+    </div>
+    <div class="column">
+      <h2 class="subtitle has-text-centered">Estimated timetable for the stop</h2>
+    </div>
+  </div>
+  <div class="columns" *ngIf="resetCheck === 0">
       <div class="column">
         <h2 class="subtitle has-text-centered">Busses stopping at the selected stop</h2>
         <app-routes [stop]="selected" (selectedBusRoute)="selectedRoute($event)"></app-routes>

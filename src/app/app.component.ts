@@ -22,6 +22,7 @@ export class AppComponent {
   marker;
   selected = {};
   route = {};
+  resetCheck : number = 0;
 
   // from https://stackoverflow.com/questions/11415106/issue-with-calculating-compass-bearing-between-two-gps-coordinates
   // modified
@@ -38,7 +39,7 @@ export class AppComponent {
     }
 
     getNearestBusStops(lat: number, lon: number) {
-
+        
         const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
         // query from https://digitransit.fi/en/developers/apis/1-routing-api/0-graphql/
@@ -110,10 +111,12 @@ export class AppComponent {
     }
 
     selectedStop($event) {
+        this.resetCheck = 0;
         this.selected = $event;
     }
 
     selectedRoute($event) {
+        this.resetCheck = 0;
         this.route = $event;
     }
 
@@ -136,6 +139,7 @@ export class AppComponent {
         
         if ($event && $event == 'reset') {
             this.map.remove();
+            this.resetCheck = 1;
         }
 
         this.map = L.map('map').setView([this.latitude, this.longitude], 13);
