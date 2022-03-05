@@ -8,4 +8,5 @@ export class DataService {
   constructor() { }
 
   resetter: number = 0;
+  repositioningUser : number = 0;
 }

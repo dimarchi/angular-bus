@@ -23,6 +23,7 @@ export class AppComponent {
   selected = {};
   route = {};
   resetCheck : number = 0;
+  repositioning : number = 0;
 
   // from https://stackoverflow.com/questions/11415106/issue-with-calculating-compass-bearing-between-two-gps-coordinates
   // modified
@@ -98,6 +99,9 @@ export class AppComponent {
         //lat = 65.016667;
         //lon = 25.466667;
 
+        this.resetter.repositioningUser = 1;
+        this.repositioning = this.resetter.repositioningUser;
+
         this.getNearestBusStops(lat, lon);
         this.marker.setLatLng([lat, lon]);
         this.map.panTo([lat, lon]);
@@ -111,11 +115,13 @@ export class AppComponent {
     }
 
     selectedStop($event) {
+        this.repositioning = 0;
         this.resetCheck = 0;
         this.selected = $event;
     }
 
     selectedRoute($event) {
+        this.repositioning = 0;
         this.resetCheck = 0;
         this.route = $event;
     }
