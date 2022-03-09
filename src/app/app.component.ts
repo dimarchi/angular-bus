@@ -99,8 +99,7 @@ export class AppComponent {
         //lat = 65.016667;
         //lon = 25.466667;
 
-        this.resetter.repositioningUser = 1;
-        this.repositioning = this.resetter.repositioningUser;
+        this.repositioning = 1;
 
         this.getNearestBusStops(lat, lon);
         this.marker.setLatLng([lat, lon]);
