@@ -2,6 +2,13 @@
   <h1 class="title has-text-centered">Three closest bus stops to your current location</h1>
   <app-help></app-help>
   <app-bus-stop [busStops]="stops" [mapInstance]="maps" (selectEvent)="selectedStop($event)"></app-bus-stop>
+  <!--
+  <div class="columns is-centered is-multiline">
+    <div class="column is-full has-text-centered">
+      <button class="button is-info is-outlined">Update</button>
+    </div>
+  </div>
+  -->
   <div leaflet (leafletMapReady)="onMapReady($event)" id="map" (dblclick)="clickedLocation($event)"></div>
   <div class="columns" *ngIf="resetCheck === 1 || repositioning === 1">
     <div class="column">

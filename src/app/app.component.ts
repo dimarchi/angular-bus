@@ -146,6 +146,13 @@ export class AppComponent {
             this.map.remove();
             this.resetCheck = 1;
         }
+        
+        if ($event && $event == 'update') {
+            this.map.remove();
+            this.repositioning = 1;
+            this.resetCheck = 0;
+            console.log('update location clicked: ', $event);
+        }
 
         this.map = L.map('map').setView([this.latitude, this.longitude], 13);
         this.maps = this.map;

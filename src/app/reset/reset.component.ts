@@ -17,6 +17,11 @@ export class ResetComponent implements OnInit {
     this.resetView.emit('reset');
   }
 
+  updateLocation() {
+    this.resetter.resetter = 0;
+    this.resetView.emit('update');
+  }
+
   ngOnInit(): void {
   }
 
