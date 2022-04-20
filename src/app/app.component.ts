@@ -141,17 +141,26 @@ export class AppComponent {
     }
 
     defaultView($event?) {
-        
         if ($event && $event == 'reset') {
             this.map.remove();
             this.resetCheck = 1;
         }
         
         if ($event && $event == 'update') {
-            this.map.remove();
-            this.repositioning = 1;
-            this.resetCheck = 0;
-            console.log('update location clicked: ', $event);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    //this.map.remove();
+                    this.repositioning = 1;
+                    this.resetCheck = 0;
+                    console.log('update location clicked: ', $event);
+
+                    this.stops = [];
+                    this.displayLocation(position);
+                },
+                (denied) => {
+                    console.log('Not authorized by user.', denied);
+                });
+            }
         }
 
         this.map = L.map('map').setView([this.latitude, this.longitude], 13);
