@@ -149,7 +149,6 @@ export class AppComponent {
         if ($event && $event == 'update') {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => {
-                    //this.map.remove();
                     this.repositioning = 1;
                     this.resetCheck = 0;
                     console.log('update location clicked: ', $event);
@@ -161,6 +160,7 @@ export class AppComponent {
                     console.log('Not authorized by user.', denied);
                 });
             }
+            this.map.remove();
         }
 
         this.map = L.map('map').setView([this.latitude, this.longitude], 13);
