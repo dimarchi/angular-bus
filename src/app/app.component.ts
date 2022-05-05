@@ -151,7 +151,6 @@ export class AppComponent {
                 navigator.geolocation.getCurrentPosition((position) => {
                     this.repositioning = 1;
                     this.resetCheck = 0;
-                    console.log('update location clicked: ', $event);
 
                     this.stops = [];
                     this.displayLocation(position);
