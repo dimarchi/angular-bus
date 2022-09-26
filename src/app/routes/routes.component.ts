@@ -6,32 +6,31 @@ import { DataService } from '../data.service';
   templateUrl: './routes.component.html',
   styleUrls: ['./routes.component.css']
 })
-export class RoutesComponent implements OnInit {
+export class RoutesComponent implements OnInit, OnChanges {
 
   @Input() stop: any = {};
   @Output() selectedBusRoute: EventEmitter<any> = new EventEmitter<any>();
   busses: any = [];
 
-  constructor(private resetter : DataService) { }
+  constructor(private resetter: DataService) { }
 
   routeClicked(route) {
-    for (let i = 0; i < this.busses.length; i++) {
-      this.busses[i].selected = 0;
+    for (const val of this.busses) {
+      val.selected = 0;
     }
-    for (let i = 0; i < this.busses.length; i++) {
-      if (this.busses[i].headsign === route.headsign) {
-        this.busses[i].selected = 1;
+
+    for (const head of this.busses) {
+      if (head.headsign === route.headsign) {
+        head.selected = 1;
       }
     }
     this.selectedBusRoute.emit(route);
   }
 
   ngOnInit() {
-    
   }
 
   ngOnChanges() {
-    
     const DIGITRANSIT_URL = 'https://api.digitransit.fi/routing/v1/routers/finland/index/graphql';
 
     // query from https://digitransit.fi/en/developers/apis/1-routing-api/stops/
@@ -69,12 +68,12 @@ export class RoutesComponent implements OnInit {
     .then(data => {
       this.busses = []; // clearing array from possible previous data
       if (data.data.stop) {
-        let busPatterns = data.data.stop.patterns;
+        const busPatterns = data.data.stop.patterns;
         busPatterns.map(bus => {
-          this.busses = [...this.busses, {'gtfsId': data.data.stop.gtfsId, 'code': bus.code, 'directionId': bus.directionId, 'shortname': bus.route.shortName, 'headsign': bus.headsign, 'longname': bus.route.longName, 'selected': 0}];
+          // tslint:disable-next-line:max-line-length
+          this.busses = [...this.busses, {gtfsId: data.data.stop.gtfsId, code: bus.code, directionId: bus.directionId, shortname: bus.route.shortName, headsign: bus.headsign, longname: bus.route.longName, selected: 0}];
         });
       }
-        
     })
     .catch(error => {
       console.log(error);

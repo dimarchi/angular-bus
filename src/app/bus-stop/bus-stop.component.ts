@@ -7,9 +7,9 @@ import { DataService } from '../data.service';
   templateUrl: './bus-stop.component.html',
   styleUrls: ['./bus-stop.component.css']
 })
-export class BusStopComponent implements OnInit {
+export class BusStopComponent implements OnInit, OnChanges {
 
-  constructor(private resetter : DataService) { }
+  constructor(private resetter: DataService) { }
 
   @Input() busStops: any = {};
   @Input() mapInstance: any = {};
@@ -19,27 +19,26 @@ export class BusStopComponent implements OnInit {
   stops = L.layerGroup();
 
   // https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words/54677081#54677081
-    // answer by Matt Frear (September 16 2014, 11:02), modified
+  // answer by Matt Frear (September 16 2014, 11:02), modified
   degToCardinal = (num) => {
     if (Number.isNaN(num)) {
-        return;
+      return;
     }
 
     const val = Math.floor((num / 22.5) + 0.5);
-    const arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    const arr = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
     return arr[(val % 16)];
   }
 
   getSelectedStop(stop) {
     this.selectEvent.emit(stop);
 
-    for (let i = 0; i < this.busStops.length; i++) {
-      this.busStops[i].selected = 0;
+    for (const busStop of this.busStops) {
+      busStop.selected = 0;
     }
-
-    for (let i = 0; i < this.busStops.length; i++) {
-      if (this.busStops[i].gtfsId === stop.gtfsId) {
-        this.busStops[i].selected = 1;
+    for (const busStop of this.busStops) {
+      if (busStop.gtfsId === stop.gtfsId) {
+        busStop.selected = 1;
       }
     }
   }
@@ -48,27 +47,28 @@ export class BusStopComponent implements OnInit {
   // modified
   removeMarks(markerStore) {
     const map = this.mapInstance;
+    /*
     for (let i = 0; i < markerStore.length; i++) {
-     map.removeLayer(markerStore[i]);
+      map.removeLayer(markerStore[i]);
+    }
+    */
+    for (const mark of markerStore) {
+      map.removeLayer(mark);
     }
   }
 
   ngOnInit() {
-    
   }
 
   ngOnChanges() {
-    this.busStops;
-
     this.marker = [];
-    
+
     const map = this.mapInstance;
     map.removeLayer(this.stops);
 
-    for (let i = 0; i < this.busStops.length; i++) {
-
+    for (const busStop of this.busStops) {
       // from https://github.com/pointhi/leaflet-color-markers
-      let greenIcon = new L.Icon({
+      const greenIcon = new L.Icon({
         iconUrl: 'assets/img/marker-icon-2x-green.png',
         shadowUrl: 'assets/img/marker-shadow.png',
         iconSize: [25, 41],
@@ -77,7 +77,7 @@ export class BusStopComponent implements OnInit {
         shadowSize: [41, 41]
       });
 
-      let mark = L.marker([this.busStops[i].lat, this.busStops[i].lon], {icon: greenIcon}).bindPopup(`${this.busStops[i].name}, ${this.busStops[i].distance} m`);
+      const mark = L.marker([busStop.lat, busStop.lon], { icon: greenIcon }).bindPopup(`${busStop.name}, ${busStop.distance} m`);
       this.marker.push(mark);
     }
 

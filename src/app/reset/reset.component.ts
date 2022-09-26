@@ -8,9 +8,9 @@ import { DataService } from '../data.service';
 })
 export class ResetComponent implements OnInit {
 
-  constructor(private resetter : DataService) { }
+  constructor(private resetter: DataService) { }
 
-  @Output() resetView : EventEmitter<any> = new EventEmitter<any>();
+  @Output() resetView: EventEmitter<any> = new EventEmitter<any>();
 
   resetViewToDefault() {
     this.resetter.resetter = 1;

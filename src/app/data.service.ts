@@ -7,5 +7,5 @@ export class DataService {
 
   constructor() { }
 
-  resetter: number = 0;
+  resetter = 0;
 }

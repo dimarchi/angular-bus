@@ -14,8 +14,8 @@ export class HelpComponent implements OnInit {
 
   visibilityCheck = 0;
 
-  toggle() : void {
-    this.visibilityCheck == 0 ? this.visibilityCheck = 1 : this.visibilityCheck = 0;
+  toggle(): void {
+    this.visibilityCheck === 0 ? this.visibilityCheck = 1 : this.visibilityCheck = 0;
   }
 
   ngOnInit(): void {
