@@ -192,10 +192,7 @@ export class AppComponent implements OnInit {
             (denied) => {
                 console.log('Not authorized by user.', denied);
             });
-        } else {
-            this.getNearestBusStops(this.latitude, this.longitude);
         }
-
         this.defaultView();
     }
 }
