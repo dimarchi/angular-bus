@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DateTime } from 'luxon';
 import { DataService } from '../data.service';
+import { API_KEY } from '../../../src/app/apikeys';
 
 @Component({
   selector: 'app-timetable',
@@ -54,7 +55,8 @@ export class TimetableComponent implements OnInit, OnChanges {
     fetch(DIGITRANSIT_URL, {
       method: 'post',
       headers: {
-        'Content-Type': 'application/graphql'
+        'Content-Type': 'application/graphql',
+        'digitransit-subscription-key': API_KEY
       },
       body: query
     })

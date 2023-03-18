@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { DataService } from '../data.service';
+import { API_KEY } from '../../../src/app/apikeys';
 
 @Component({
   selector: 'app-routes',
@@ -60,7 +61,8 @@ export class RoutesComponent implements OnInit, OnChanges {
     fetch(DIGITRANSIT_URL, {
       method: 'post',
       headers: {
-          'Content-Type': 'application/graphql'
+          'Content-Type': 'application/graphql',
+          'digitransit-subscription-key': API_KEY
       },
       body: query
     })

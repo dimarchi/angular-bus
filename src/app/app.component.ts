@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { DataService } from './data.service';
+import { API_KEY } from './apikeys';
 
 @Component({
   selector: 'app-root',
@@ -69,7 +70,8 @@ export class AppComponent implements OnInit {
         fetch(DIGITRANSIT_URL, {
             method: 'post',
             headers: {
-                'Content-Type': 'application/graphql'
+                'Content-Type': 'application/graphql',
+                'digitransit-subscription-key': API_KEY
             },
             body: query
         })
