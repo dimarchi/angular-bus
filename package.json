@@ -27,7 +27,7 @@
     "bulma": "^0.9.3",
     "geolocator": "^2.1.5",
     "leaflet": "^1.7.1",
-    "luxon": "^3.0.4",
+    "luxon": "^3.2.1",
     "rxjs": "^7.4.0",
     "serialize-javascript": "^5.0.1",
     "tslib": "^2.3.1",
