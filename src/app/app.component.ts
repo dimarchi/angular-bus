@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { DataService } from './data.service';
-import { API_KEY } from './apikeys';
+import { API_KEY } from '../app/apikeys';
 
 @Component({
   selector: 'app-root',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { DataService } from '../data.service';
-import { API_KEY } from '../../../src/app/apikeys';
+import { API_KEY } from '../../app/apikeys';
 
 @Component({
   selector: 'app-routes',
